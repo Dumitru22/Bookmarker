@@ -1,2 +1,2 @@
 # Bookmarker
-Show bookmark list filtered by today, yesterday, and older with edit facility with the posibility to create a new one and to edit an existing one
+Create a bookmark list filtered by today, yesterday, and older with an edit facility and the possibility of creating a new one
