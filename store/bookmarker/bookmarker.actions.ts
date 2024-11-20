@@ -9,3 +9,8 @@ export class CreateBookmarker {
   static readonly type = '[Create bookmarker] action';
   constructor(public bookmarkDetails: FormGroup) {}
 }
+
+export class EditBookmarker {
+  static readonly type = '[Edit bookmarker] action';
+  constructor(public bookmarkDetails: Product) {}
+}

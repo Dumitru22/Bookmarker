@@ -15,4 +15,8 @@ export class HeaderComponent{
     this.router.navigate(['/create'])
   }
 
+  refreshPage(){
+    this.router.navigate([''])
+  }
+
 }
