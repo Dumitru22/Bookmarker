@@ -1,0 +1,27 @@
+@import '../../variables.scss';
+
+.container {
+    background-color: $color-blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 20px;
+    .title{
+        color: white
+    }
+    mat-form-field{
+        flex-direction: unset;
+        width: 350px;
+        padding: 10px;
+    }
+    .filter{
+        margin-left: 45%;
+    }
+    .createIcon{
+        color: #ffffff;
+        cursor: pointer;
+        &:hover{
+            color:#86878c
+        }
+    }
+}

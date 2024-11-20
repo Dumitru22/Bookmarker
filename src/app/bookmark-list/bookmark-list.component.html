@@ -1,0 +1,16 @@
+<div class="container" *ngIf="(bookmarkers$ | async) as date">
+    <mat-list>
+        <mat-list-item *ngFor="let product of date">
+            <div class="blockInfo">
+            <div class="info">
+                <img class="bookmarkIcon" src="../../assets/bookmark.png">
+                <div class="product">
+                <span class="name">{{product?.name}}</span>
+                <span matListItemLine>{{product?.description}}</span>
+                </div>
+            </div>
+            <img class="editIcon" src="../../assets/icons8-edit-24.png">
+            </div>
+        </mat-list-item>
+        </mat-list>
+</div>

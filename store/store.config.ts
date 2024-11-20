@@ -1,11 +1,9 @@
 import { NgxsConfig } from '@ngxs/store';
 import { NgxsDevtoolsOptions } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginOptions } from '@ngxs/logger-plugin';
 
-import { AuthState } from './auth/auth.state';
-import { DashboardStates } from './dashboard';
+import { BookmarkerState } from './bookmarker/bookmarker.state';
 
-export const STATES_MODULES = [AuthState, ...DashboardStates];
+export const STATES_MODULES = [BookmarkerState];
 
 export const OPTIONS_CONFIG: Partial<NgxsConfig> = {
   /**
@@ -28,12 +26,4 @@ export const DEVTOOLS_REDUX_CONFIG: NgxsDevtoolsOptions = {
   disabled: false
 };
 
-export const LOGGER_CONFIG: NgxsLoggerPluginOptions = {
-  /**
-   * Disable the logger. Useful for prod mode..
-   * todo: you need set production mode
-   * import { environment } from '@env';
-   * disabled: environment.production
-   */
-  disabled: false
-};
+

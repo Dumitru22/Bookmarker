@@ -1,0 +1,40 @@
+@import '../../variables.scss';
+
+.container{
+    margin: 0 200px 0 200px;
+    height: 650px;
+    overflow: scroll;
+
+    mat-list-item{
+        margin-top: 10px;
+        .blockInfo{
+            display: flex;
+            justify-content: space-between;
+            .editIcon {
+                height: 18px;
+                cursor: pointer;
+            }
+            .info{
+                display: flex;
+                .bookmarkIcon {
+                    height: 18px;
+                }
+                .product{
+                    margin-top: -10px;
+                    margin-left: 10px;
+                    .name{
+                        font-weight:500;
+                    }
+                }
+            }
+        }
+    }
+}
+::-webkit-scrollbar {
+    width: 5px;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: $color-blue;; 
+    border-radius: 10px;
+  }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { BookmarkerState } from '../../store/store/bookmarker/states/bookmarker.state';
+import { BookmarkerState } from '../../store/bookmarker/bookmarker.state';
 
 @Component({
   selector: 'app-root',

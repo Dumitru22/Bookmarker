@@ -1,0 +1,41 @@
+@import '../../variables.scss';
+
+.container {
+    margin: 50px 200px 0 200px;
+    .card{ 
+        display: flex;
+        .firstRow {
+            width: 30%;
+             .mat-mdc-card-content>:last-child:not(.mat-mdc-card-footer) {
+                width: 100%;
+            }
+            mat-card-title {
+                font-size: 14px;
+            }
+        }
+        .secondRow {
+            width: 70%;
+            .mat-mdc-card-content>:last-child:not(.mat-mdc-card-footer) {
+                width: 100%;
+            }
+            mat-card-title {
+                font-size: 14px;
+                color: $color-gray
+            }
+            mat-card-header {
+                display: flex;
+                justify-content: space-between;
+                height: 22px;
+                margin-bottom: 9px;
+            }
+            mat-card-footer {
+                display: flex;
+                justify-content: right;
+                button{
+                    margin: 16px;
+                    color: $color-white;
+                }
+            }
+        }
+    }
+}
