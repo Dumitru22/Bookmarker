@@ -17,6 +17,6 @@ export class AppComponent implements OnInit{
   bookmarks$!: Observable<any>
   
   ngOnInit(){
-    this.bookmarks$ = this.store.select(BookmarkerState.getBookmarker);
+    this.bookmarks$ = this.store.select(BookmarkerState.getBookmarkeList);
   }
 }

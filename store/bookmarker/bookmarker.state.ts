@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Product } from '../../src/assets/product-interface';
-import { CreateBookmarker, EditBookmarker, GetBookmarker } from './bookmarker.actions';
+import { CreateBookmarker, GetEditBookmarker, EditBookmarker, GetBookmarkeList } from './bookmarker.actions';
 import { MockDbService } from '../../src/app/get-data.service';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 
 export interface BookmarkerStateModel {
-  bookmarkerList: Product[],
+  loadBookmarkList: Product[],
+  editBookmarkList: Product[]
   created: Product[],
-  edit: Product
+  edit: Product,
 }
 
 @State<BookmarkerStateModel>({
   name: 'bookmarker',
   defaults: {
-    bookmarkerList: [],
+    loadBookmarkList: [],
+    editBookmarkList:[],
     created: [],
     edit: {name: '', description: '', date: '', id: 0},
   }
@@ -28,21 +30,21 @@ export class BookmarkerState {
   constructor(private http: HttpClient) {}
 
   @Selector()
-  static getBookmarker(state: BookmarkerStateModel): Product[] {
-    return state.bookmarkerList;
+  static getBookmarkeList(state: BookmarkerStateModel): Product[] {
+    return state.loadBookmarkList;
   }
 
   @Selector()
-  static editBookmarker(state: BookmarkerStateModel): Product {
+  static GetEditBookmarker(state: BookmarkerStateModel): Product {
     return state.edit;
   }
 
-  @Action(GetBookmarker)
-  getBookmarkers(data: StateContext<BookmarkerStateModel>, action: GetBookmarker) {
+  @Action(GetBookmarkeList)
+  getBookmarkerList(data: StateContext<BookmarkerStateModel>) {
     const state = data.getState();
     return this.http.get<Product[]>(this.apiUrl).pipe(
       tap((bookmarkers: Product[]) => {
-        data.patchState({bookmarkerList: [...bookmarkers, ...state.created]})
+        data.patchState({loadBookmarkList: [...bookmarkers, ...state.created]})
       })
     );
   }
@@ -51,14 +53,25 @@ export class BookmarkerState {
   createBookmarkers(data: StateContext<BookmarkerStateModel>, action: CreateBookmarker) {
     const state = data.getState();
     let newObject: Product = action.bookmarkDetails.value;
-    newObject.id = state.bookmarkerList[state.bookmarkerList.length - 1].id + 1;
+    newObject.id = state.loadBookmarkList[state.loadBookmarkList.length - 1].id + 1;
     data.patchState({created: [...state.created, newObject]})
   }
 
-  @Action(EditBookmarker)
-  editBookmarkers(data: StateContext<BookmarkerStateModel>, action: EditBookmarker) {
+  @Action(GetEditBookmarker)
+  GetEditBookmarkers(data: StateContext<BookmarkerStateModel>, action: GetEditBookmarker) {
     const state = data.getState();
     data.patchState({edit: action.bookmarkDetails})
-    console.log('state',state)
+  }
+
+  @Action(EditBookmarker)
+  EditBookmarkers(data: StateContext<BookmarkerStateModel>, action: EditBookmarker) {
+    const state = data.getState();
+    state.loadBookmarkList.filter((r: Product) => {
+      if(r.id === state.edit.id) {
+        r.description = action.bookmarkDetails.value.description,
+        r.name = action.bookmarkDetails.value.name
+      }
+    })
+    data.patchState({editBookmarkList: state.loadBookmarkList})
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CreateBookmarker, EditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
 import { Store } from '@ngxs/store';
 import { FormGroup } from '@angular/forms';
+import { EditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
 
 @Component({
   selector: 'app-bookmark-edit',
@@ -14,8 +14,7 @@ export class BookmarkEditComponent {
     
   }
 
-  editBookmark(event: FormGroup) {
-    console.log('event',event)
-    // this.store.dispatch(new EditBookmarker(event));
+  editBookmark(form: FormGroup) {
+    this.store.dispatch(new EditBookmarker(form));
   }
 }

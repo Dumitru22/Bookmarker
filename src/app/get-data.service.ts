@@ -22,15 +22,21 @@ export class MockDbService implements InMemoryDbService {
       },
       {
         id: 3,
-        name: 'JavaScript Best Practices',
+        name: 'JavaScript Best Practices___1',
+        description: 'Write cleaner and more maintainable JavaScript code.',
+        date: '2024-11-20T16:42:06.022Z'
+      },
+      {
+        id: 4,
+        name: 'JavaScript Best Practices___2',
         description: 'Write cleaner and more maintainable JavaScript code.',
         date: '2024-01-01T12:00:00.000Z'
       },
       {
-        id: 4,
-        name: 'JavaScript Best Practices',
+        id: 5,
+        name: 'JavaScript Best Practices___2',
         description: 'Write cleaner and more maintainable JavaScript code.',
-        date: '2024-01-01T12:00:00.000Z'
+        date: '2024-11-19T12:00:00.000Z'
       },
     ];
     return { products };

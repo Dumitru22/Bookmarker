@@ -1,12 +1,17 @@
 @import '../../variables.scss';
 
 .container{
-    margin: 0 200px 0 200px;
+    margin: 20px 200px 0 200px;
     height: 650px;
     overflow: scroll;
 
+    .label{
+        color: $color-gray;
+        font-weight: bold;
+    }
+
     mat-list-item{
-        margin-top: 10px;
+        margin: 10px 0 20px 0;
         .blockInfo{
             display: flex;
             justify-content: space-between;
@@ -24,6 +29,7 @@
                     margin-left: 10px;
                     .name{
                         font-weight:500;
+                        color: $color-black;
                     }
                 }
             }

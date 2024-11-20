@@ -1,8 +1,8 @@
 import { FormGroup } from "@angular/forms";
 import { Product } from "../../src/assets/product-interface";
 
-export class GetBookmarker {
-  static readonly type = '[Get bookmarker] action';
+export class GetBookmarkeList {
+  static readonly type = '[Get bookmark list] action';
 }
 
 export class CreateBookmarker {
@@ -10,7 +10,13 @@ export class CreateBookmarker {
   constructor(public bookmarkDetails: FormGroup) {}
 }
 
-export class EditBookmarker {
-  static readonly type = '[Edit bookmarker] action';
+export class GetEditBookmarker {
+  static readonly type = '[Get edit bookmarker] action';
   constructor(public bookmarkDetails: Product) {}
 }
+
+export class EditBookmarker {
+  static readonly type = '[Edit bookmarker] action';
+  constructor(public bookmarkDetails: FormGroup) {}
+}
+

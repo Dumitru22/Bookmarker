@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MockDbService } from '../get-data.service';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BookmarkerState } from '../../../store/bookmarker/bookmarker.state';
 import { Product } from '../../assets/product-interface';
-import { EditBookmarker, GetBookmarker } from '../../../store/bookmarker/bookmarker.actions';
+import { GetBookmarkeList, GetEditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,20 +14,42 @@ import { Router } from '@angular/router';
 })
 export class BookmarkListComponent {
 
-  constructor(private store: Store, private router: Router){
-
-  }
+  constructor(private store: Store, private router: Router){}
   
-  bookmarkers$!: Observable<Product[]>
+  bookmarkerList$!: Observable<Product[]>
+
+  today: any = [];
+  yesterday: Product[] = [];
+  older: Product[] = [];
+  
   
   ngOnInit(){
-    this.store.dispatch(new GetBookmarker());
-    this.bookmarkers$ = this.store.select(BookmarkerState.getBookmarker);
+    
+
+    this.store.dispatch(new GetBookmarkeList());
+    this.bookmarkerList$ = this.store.select(BookmarkerState.getBookmarkeList);
+    this.store.select(BookmarkerState.getBookmarkeList).pipe(
+      map((res: Product[]) => {
+          this.filterByDates(res);
+        }
+      )).subscribe();
+  }
+
+  filterByDates(res: Product[]) {
+    res.filter(r => {
+      if(new Date(r.date).getDate() === new Date().getDate() && new Date(r.date).getMonth() === new Date().getMonth() && new Date(r.date).getFullYear() === new Date().getFullYear()) {
+        this.today.push(r);
+      } else if (new Date(r.date).getDate() === new Date().getDate() - 1 && new Date(r.date).getMonth() === new Date().getMonth() && new Date(r.date).getFullYear() === new Date().getFullYear()) {
+        this.yesterday.push(r);
+      } else {
+        this.older.push(r);
+      }
+    })
   }
 
   editBookmark(product: Product) {
     console.log('product', product)
-    this.store.dispatch(new EditBookmarker(product));
+    this.store.dispatch(new GetEditBookmarker(product));
     this.router.navigate(['/edit'])
   }
 }

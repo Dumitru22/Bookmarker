@@ -32,7 +32,7 @@ export class BookmarkFormComponent implements OnInit{
 
   ngOnInit(){
     if(this.isEdit){
-      this.bookmarker$ = this.store.select(BookmarkerState.editBookmarker).subscribe(res => 
+      this.bookmarker$ = this.store.select(BookmarkerState.GetEditBookmarker).subscribe(res => 
         {this.bookmarkForm.get('description')?.setValue(res.description),
         this.bookmarkForm.get('name')?.setValue(res.name)}
       );
