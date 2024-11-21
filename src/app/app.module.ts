@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderUiComponent } from './ui-components/header-ui/header-ui.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +29,7 @@ import { BookmarkFormComponent } from './ui-components/bookmark-form-ui/bookmark
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    HeaderUiComponent,
     BookmarkListComponent,
     BookmarkCreateComponent,
     BookmarkEditComponent,

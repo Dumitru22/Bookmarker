@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { FilterBookmarkerList } from '../../../store/bookmarker/bookmarker.actions';
-import { BookmarkerState } from '../../../store/bookmarker/bookmarker.state';
+import { FilterBookmarkerList } from '../../../../store/bookmarker/bookmarker.actions';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  selector: 'app-header-ui',
+  templateUrl: './header-ui.component.html',
+  styleUrl: './header-ui.component.scss'
 })
-export class HeaderComponent{
+
+export class HeaderUiComponent{
 
   constructor(private router: Router, private store: Store){}
 
@@ -26,6 +26,8 @@ export class HeaderComponent{
   }
 
   refreshPage(){
-    this.router.navigate([''])
+    this.router.navigate(['']);
+    this.filterValue = '';
+    this.store.dispatch(new FilterBookmarkerList(''));
   }
 }

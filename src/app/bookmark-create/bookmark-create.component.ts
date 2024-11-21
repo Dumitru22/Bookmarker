@@ -10,9 +10,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class BookmarkCreateComponent {
 
-  constructor(private store: Store) {
-
-  }
+  constructor(private store: Store) {}
 
   createBookmark(form: FormGroup){
     this.store.dispatch(new CreateBookmarker(form));

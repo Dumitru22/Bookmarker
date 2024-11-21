@@ -10,9 +10,7 @@ import { EditBookmarkerList } from '../../../store/bookmarker/bookmarker.actions
 })
 export class BookmarkEditComponent {
 
-  constructor(private store: Store) {
-    
-  }
+  constructor(private store: Store) {}
 
   editBookmark(form: FormGroup) {
     this.store.dispatch(new EditBookmarkerList(form));

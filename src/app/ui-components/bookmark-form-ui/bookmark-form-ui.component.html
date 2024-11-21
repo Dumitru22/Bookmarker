@@ -1,40 +1,54 @@
 <div class="container">
     <mat-card>
         <div class="card" [formGroup]="bookmarkForm">
-            <div class="firstRow">
-                <mat-card-header>
-                    <mat-card-title>{{name}}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Name</mat-label>
-                        <input matInput placeholder="Name" formControlName="name" value="Sushi">
-                        @if (!bookmarkForm.hasError('required')) {
-                            <mat-error>Name must be at least 3 characters long</mat-error>
-                        }
-                        </mat-form-field>
-                </mat-card-content>
+            <div class="title">
+                <mat-card-title class="name">{{name}}</mat-card-title>
+                <img class="bookmarkIcon" src="../../assets/bookmark.png">
             </div>
-            <div class="secondRow">
-                <mat-card-header>
-                    <mat-card-title>Type bookmark name and description</mat-card-title>
-                    <img class="bookmarkIcon" src="../../assets/bookmark.png">
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field class="full-width">
-                        <mat-label>Description</mat-label>
-                        <input matInput placeholder="description" formControlName="description">
-                        @if (!bookmarkForm.hasError('required')) {
-                            <mat-error>Description must be at least 3 characters long</mat-error>
-                        }
-                        </mat-form-field>
-                </mat-card-content>
-                <mat-card-footer class="card-footer">
-                    <button mat-flat-button (click)="editList()" color="primary" [disabled]="!bookmarkForm.valid">{{buttonTitle}}</button>
-                </mat-card-footer>
+            <div class="inputElement">
+                <div class="firstRow">
+                    <mat-card-header>
+                        <mat-card-title>Type Name</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Name" formControlName="name" value="Sushi">
+                            <mat-error *ngIf="bookmarkForm.get('name')?.hasError('required')">
+                                Name is required.
+                              </mat-error>
+                              <mat-error *ngIf="bookmarkForm.get('name')?.hasError('minlength')">
+                                Name must be at least 3 characters long.
+                              </mat-error>
+                            </mat-form-field>
+                    </mat-card-content>
+                </div>
+                <div class="secondRow">
+                    <mat-card-header>
+                        <mat-card-title>Type URL</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-form-field class="full-width">
+                            <mat-label>URL</mat-label>
+                            <input matInput placeholder="URL" formControlName="url">
+                            <mat-error *ngIf="bookmarkForm.get('url')?.hasError('required')">
+                                URL is required.
+                              </mat-error>
+                              <mat-error *ngIf="bookmarkForm.get('url')?.hasError('pattern')">
+                                Please enter a valid URL (e.g., https://example.com).
+                              </mat-error>
+                              <mat-error *ngIf="bookmarkForm.get('url')?.hasError('minlength')">
+                                URL must be at least 3 characters long.
+                              </mat-error>
+                            </mat-form-field>
+                    </mat-card-content>
+                    <mat-card-footer class="card-footer">
+                        <button mat-flat-button (click)="editList()" color="primary" [disabled]="!bookmarkForm.valid">{{buttonTitle}}</button>
+                    </mat-card-footer>
+                </div>
             </div>
         </div>
-      </mat-card>
+    </mat-card>
 </div>
 
 
