@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { FormGroup } from '@angular/forms';
-import { EditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
+import { EditBookmarkerList } from '../../../store/bookmarker/bookmarker.actions';
 
 @Component({
   selector: 'app-bookmark-edit',
@@ -15,6 +15,6 @@ export class BookmarkEditComponent {
   }
 
   editBookmark(form: FormGroup) {
-    this.store.dispatch(new EditBookmarker(form));
+    this.store.dispatch(new EditBookmarkerList(form));
   }
 }

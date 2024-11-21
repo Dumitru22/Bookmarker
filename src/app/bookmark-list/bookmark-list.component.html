@@ -1,46 +1,68 @@
 <div class="container">
     <mat-list>
-        <span *ngIf="today.length" class="label">Today</span>
-        <mat-list-item *ngFor="let product of today">
-            <div class="blockInfo">
-                <div class="info">
-                    <img class="bookmarkIcon" src="../../assets/bookmark.png">
-                    <div class="product">
-                    <span class="name">{{product?.name}}</span>
-                    <span matListItemLine>{{product?.description}}</span>
+        <ng-container *ngIf="!(filterValue$ | async) else filterItems">
+            <span *ngIf="today.length && !(filterValue$ | async)" class="label">Today</span>
+            <mat-list-item *ngFor="let product of today">
+                <div class="blockInfo">
+                    <div class="info">
+                        <img class="bookmarkIcon" src="../../assets/bookmark.png">
+                        <div class="product">
+                        <span class="name">{{product?.name}}</span>
+                        <span matListItemLine>{{product?.description}}</span>
+                        </div>
                     </div>
+                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
                 </div>
-                <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
-            </div>
-        </mat-list-item>
-        
-        <span *ngIf="yesterday.length" class="label">Yesterday</span>
-        <mat-list-item *ngFor="let product of yesterday">
-            <div class="blockInfo">
-                <div class="info">
-                    <img class="bookmarkIcon" src="../../assets/bookmark.png">
-                    <div class="product">
-                    <span class="name">{{product?.name}}</span>
-                    <span matListItemLine>{{product?.description}}</span>
+            </mat-list-item>
+            
+            <span *ngIf="yesterday.length && !(filterValue$ | async)" class="label">Yesterday</span>
+            <mat-list-item *ngFor="let product of yesterday">
+                <div class="blockInfo">
+                    <div class="info">
+                        <img class="bookmarkIcon" src="../../assets/bookmark.png">
+                        <div class="product">
+                        <span class="name">{{product?.name}}</span>
+                        <span matListItemLine>{{product?.description}}</span>
+                        </div>
                     </div>
+                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
                 </div>
-                <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
-            </div>
-        </mat-list-item>
+            </mat-list-item>
 
-        <span *ngIf="older.length" class="label">Older</span>
-        <mat-list-item *ngFor="let product of older">
-            <div class="blockInfo">
-                <div class="info">
-                    <img class="bookmarkIcon" src="../../assets/bookmark.png">
-                    <div class="product">
-                    <span class="name">{{product?.name}}</span>
-                    <span matListItemLine>{{product?.description}}</span>
+            <span *ngIf="older.length && !(filterValue$ | async)" class="label">Older</span>
+            <mat-list-item *ngFor="let product of older">
+                <div class="blockInfo">
+                    <div class="info">
+                        <img class="bookmarkIcon" src="../../assets/bookmark.png">
+                        <div class="product">
+                        <span class="name">{{product?.name}}</span>
+                        <span matListItemLine>{{product?.description}}</span>
+                        </div>
                     </div>
+                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
                 </div>
-                <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
-            </div>
-        </mat-list-item>
-        
+            </mat-list-item>
+        </ng-container>
     </mat-list>
 </div>
+
+<ng-template #filterItems>
+    <span class="label" *ngIf="filterValue$ | async">Results for: <span class="filterValue">{{filterValue$ | async}}</span></span>
+    <mat-list>
+        <mat-list-item *ngFor="let filterItems of filterList$ | async">
+                <div class="blockInfo">
+                    <div class="info">
+                        <img class="bookmarkIcon" src="../../assets/bookmark.png">
+                        <div class="product">
+                            <span class="name">{{filterItems?.name}}</span>
+                            <span matListItemLine>{{filterItems?.description}}</span>
+                        </div>
+                    </div>
+                    <img class="editIcon" (click)="editBookmark(filterItems)" src="../../assets/icons8-edit-24.png">
+                </div>
+        </mat-list-item>
+    </mat-list>
+    <div *ngIf="!(filterList$ | async)?.length">
+        <app-error-page-ui [title]="'No results found'" [errorImage]="'../../assets/error.png'"></app-error-page-ui>
+    </div>
+</ng-template> 

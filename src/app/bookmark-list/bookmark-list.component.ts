@@ -17,17 +17,19 @@ export class BookmarkListComponent {
   constructor(private store: Store, private router: Router){}
   
   bookmarkerList$!: Observable<Product[]>
+  filterValue$!: Observable<string>
+  filterList$!: Observable<Product[]>
 
-  today: any = [];
+  today: Product[] = [];
   yesterday: Product[] = [];
   older: Product[] = [];
   
-  
   ngOnInit(){
-    
-
     this.store.dispatch(new GetBookmarkeList());
     this.bookmarkerList$ = this.store.select(BookmarkerState.getBookmarkeList);
+    this.filterValue$ = this.store.select(BookmarkerState.getFilterBookmarker);
+    this.filterList$ = this.store.select(BookmarkerState.getFilterList);
+
     this.store.select(BookmarkerState.getBookmarkeList).pipe(
       map((res: Product[]) => {
           this.filterByDates(res);
@@ -36,6 +38,10 @@ export class BookmarkListComponent {
   }
 
   filterByDates(res: Product[]) {
+    this.today = [];
+    this.yesterday = [];
+    this.older = [];
+
     res.filter(r => {
       if(new Date(r.date).getDate() === new Date().getDate() && new Date(r.date).getMonth() === new Date().getMonth() && new Date(r.date).getFullYear() === new Date().getFullYear()) {
         this.today.push(r);
@@ -48,7 +54,6 @@ export class BookmarkListComponent {
   }
 
   editBookmark(product: Product) {
-    console.log('product', product)
     this.store.dispatch(new GetEditBookmarker(product));
     this.router.navigate(['/edit'])
   }

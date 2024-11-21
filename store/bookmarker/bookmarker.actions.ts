@@ -15,8 +15,13 @@ export class GetEditBookmarker {
   constructor(public bookmarkDetails: Product) {}
 }
 
-export class EditBookmarker {
-  static readonly type = '[Edit bookmarker] action';
+export class EditBookmarkerList {
+  static readonly type = '[Edit bookmarker list] action';
   constructor(public bookmarkDetails: FormGroup) {}
+}
+
+export class FilterBookmarkerList {
+  static readonly type = '[Filter bookmarker list] action';
+  constructor(public filterValue: string) {}
 }
 

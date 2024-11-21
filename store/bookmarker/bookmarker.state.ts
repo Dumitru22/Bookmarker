@@ -1,25 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Product } from '../../src/assets/product-interface';
-import { CreateBookmarker, GetEditBookmarker, EditBookmarker, GetBookmarkeList } from './bookmarker.actions';
+import { CreateBookmarker, GetEditBookmarker, EditBookmarkerList, GetBookmarkeList, FilterBookmarkerList } from './bookmarker.actions';
 import { MockDbService } from '../../src/app/get-data.service';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 
 export interface BookmarkerStateModel {
-  loadBookmarkList: Product[],
-  editBookmarkList: Product[]
+  bookmarkList: Product[],
+  filterBookmarkList: Product[],
+  editBookmarkList: Product[],
   created: Product[],
-  edit: Product,
+  editBookmark: Product,
+  filterValue: string,
+
 }
 
 @State<BookmarkerStateModel>({
   name: 'bookmarker',
   defaults: {
-    loadBookmarkList: [],
-    editBookmarkList:[],
+    bookmarkList: [],
+    filterBookmarkList:[],
+    editBookmarkList: [],
     created: [],
-    edit: {name: '', description: '', date: '', id: 0},
+    editBookmark: {name: '', description: '', date: '', id: 0},
+    filterValue: ''
   }
 })
 
@@ -31,47 +36,85 @@ export class BookmarkerState {
 
   @Selector()
   static getBookmarkeList(state: BookmarkerStateModel): Product[] {
-    return state.loadBookmarkList;
+    return state.editBookmarkList.length ? state.editBookmarkList : state.bookmarkList
   }
 
   @Selector()
-  static GetEditBookmarker(state: BookmarkerStateModel): Product {
-    return state.edit;
+  static getEditBookmarker(state: BookmarkerStateModel): Product {
+    return state.editBookmark;
   }
 
+  @Selector()
+  static getFilterBookmarker(state: BookmarkerStateModel): string {
+    return state.filterValue;
+  }
+
+  @Selector()
+  static getFilterList(state: BookmarkerStateModel): Product[] {
+    return state.filterBookmarkList;
+  }
+  
+
   @Action(GetBookmarkeList)
-  getBookmarkerList(data: StateContext<BookmarkerStateModel>) {
+  getBookmarkerList(data: StateContext<BookmarkerStateModel>) { //Get bookmarker List
     const state = data.getState();
-    return this.http.get<Product[]>(this.apiUrl).pipe(
+    let list = this.http.get<Product[]>(this.apiUrl).pipe(
       tap((bookmarkers: Product[]) => {
-        data.patchState({loadBookmarkList: [...bookmarkers, ...state.created]})
+        data.patchState({bookmarkList: [...bookmarkers, ...state.created]})
       })
     );
+    return list;
   }
   
   @Action(CreateBookmarker)
-  createBookmarkers(data: StateContext<BookmarkerStateModel>, action: CreateBookmarker) {
+  createBookmarkers(data: StateContext<BookmarkerStateModel>, action: CreateBookmarker) { // Create bookmarker
     const state = data.getState();
     let newObject: Product = action.bookmarkDetails.value;
-    newObject.id = state.loadBookmarkList[state.loadBookmarkList.length - 1].id + 1;
+    newObject.id = state.bookmarkList[state.bookmarkList.length - 1].id + 1;
     data.patchState({created: [...state.created, newObject]})
+    data.patchState({editBookmarkList: state.editBookmarkList.length ? [...state.bookmarkList, newObject] : [...state.bookmarkList, newObject]})
   }
 
   @Action(GetEditBookmarker)
-  GetEditBookmarkers(data: StateContext<BookmarkerStateModel>, action: GetEditBookmarker) {
+  getEditBookmarkers(data: StateContext<BookmarkerStateModel>, action: GetEditBookmarker) { // Edit bookmarkers
     const state = data.getState();
-    data.patchState({edit: action.bookmarkDetails})
+    data.patchState({editBookmark: action.bookmarkDetails})
   }
 
-  @Action(EditBookmarker)
-  EditBookmarkers(data: StateContext<BookmarkerStateModel>, action: EditBookmarker) {
+  @Action(EditBookmarkerList)
+  editBookmarkerList(data: StateContext<BookmarkerStateModel>, action: EditBookmarkerList) {  // Get bookmarker list edited
     const state = data.getState();
-    state.loadBookmarkList.filter((r: Product) => {
-      if(r.id === state.edit.id) {
-        r.description = action.bookmarkDetails.value.description,
-        r.name = action.bookmarkDetails.value.name
-      }
-    })
-    data.patchState({editBookmarkList: state.loadBookmarkList})
+    if(state.editBookmarkList.length) {
+      state.editBookmarkList.filter((r: Product) => {
+        if(r.id === state.editBookmark.id) {
+          r.description = action.bookmarkDetails.value.description,
+          r.name = action.bookmarkDetails.value.name
+        }
+      })
+      data.patchState({editBookmarkList: [...state.editBookmarkList]})
+    } else {
+      state.bookmarkList.filter((r: Product) => {
+        if(r.id === state.editBookmark.id) {
+          r.description = action.bookmarkDetails.value.description,
+          r.name = action.bookmarkDetails.value.name
+        }
+      })
+      data.patchState({editBookmarkList: state.bookmarkList})
+    }
+  }
+
+  @Action(FilterBookmarkerList)
+  filterBookmarkerList(data: StateContext<BookmarkerStateModel>, action: FilterBookmarkerList) { // Filter bookmarkers
+    data.patchState({filterValue: action.filterValue});
+    const state = data.getState();
+
+    let filterList: Product[] = [];
+    if(state.editBookmarkList.length) {
+      filterList = state.editBookmarkList.filter(r => r.name.toLowerCase().includes(action.filterValue.toLowerCase()));
+    } else {
+      filterList = state.bookmarkList.filter(r => r.name.toLowerCase().includes(action.filterValue.toLowerCase()));
+    }
+    
+    data.patchState({filterBookmarkList: action.filterValue ? filterList : []});
   }
 }

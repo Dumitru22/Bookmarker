@@ -18,11 +18,13 @@ import { MockDbService } from './get-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BookmarkCreateComponent } from './bookmark-create/bookmark-create.component';
 import { BookmarkEditComponent } from './bookmark-edit/bookmark-edit.component';
-import { BookmarkFormComponent } from './bookmark-form-ui/bookmark-form-ui.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { ErrorPageUiComponent } from './ui-components/error-page-ui/error-page-ui.component';
+import { BookmarkFormComponent } from './ui-components/bookmark-form-ui/bookmark-form-ui.component';
 
 
 @NgModule({
@@ -32,9 +34,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     BookmarkListComponent,
     BookmarkCreateComponent,
     BookmarkEditComponent,
-    BookmarkFormComponent
+    BookmarkFormComponent,
+    ErrorPageUiComponent
   ],
   imports: [
+    FormsModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatButtonModule,

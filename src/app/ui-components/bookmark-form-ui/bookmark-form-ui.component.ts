@@ -1,12 +1,9 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CreateBookmarker } from '../../../store/bookmarker/bookmarker.actions';
 import { Router } from '@angular/router';
-import {FormGroup, Validators} from '@angular/forms';
-import {FormBuilder} from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { Product } from '../../assets/product-interface';
-import { BookmarkerState } from '../../../store/bookmarker/bookmarker.state';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { BookmarkerState } from '../../../../store/bookmarker/bookmarker.state';
 
 @Component({
   selector: 'app-bookmark-form-ui',
@@ -25,16 +22,18 @@ export class BookmarkFormComponent implements OnInit{
   bookmarker$!: Subscription
 
   bookmarkForm = this.formBuilder.group({
-    name: ['', Validators.required],
-    description: ['', Validators.required],
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    description: ['', [Validators.required, Validators.minLength(3)]],
     date: [new Date().toISOString()],
+    id: [0]
   });
 
   ngOnInit(){
     if(this.isEdit){
-      this.bookmarker$ = this.store.select(BookmarkerState.GetEditBookmarker).subscribe(res => 
+      this.bookmarker$ = this.store.select(BookmarkerState.getEditBookmarker).subscribe(res => 
         {this.bookmarkForm.get('description')?.setValue(res.description),
-        this.bookmarkForm.get('name')?.setValue(res.name)}
+        this.bookmarkForm.get('name')?.setValue(res.name),
+        this.bookmarkForm.get('id')?.setValue(res.id)}
       );
     }
   }
