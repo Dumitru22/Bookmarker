@@ -3,12 +3,12 @@ import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { BookmarkerState } from '../../../../store/bookmarker/bookmarker.state';
+import { BookmarkerState } from '../../../store/bookmarker/bookmarker.state';
 
 @Component({
-  selector: 'app-bookmark-form-ui',
-  templateUrl: './bookmark-form-ui.component.html',
-  styleUrl: './bookmark-form-ui.component.scss'
+  selector: 'app-bookmark-form',
+  templateUrl: './bookmark-form.component.html',
+  styleUrl: './bookmark-form.component.scss'
 })
 export class BookmarkFormComponent implements OnInit{
 

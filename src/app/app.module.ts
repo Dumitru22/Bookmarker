@@ -23,7 +23,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ErrorPageUiComponent } from './ui-components/error-page-ui/error-page-ui.component';
-import { BookmarkFormComponent } from './ui-components/bookmark-form-ui/bookmark-form-ui.component';
+import { BookmarkFormComponent } from './bookmark-form/bookmark-form.component';
 import { ConfirmModalUiComponent } from './ui-components/confirm-modal-ui/confirm-modal-ui.component';
 
 

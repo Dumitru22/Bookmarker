@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { map, Observable } from 'rxjs';
 import { BookmarkerState } from '../../../store/bookmarker/bookmarker.state';
 import { Product } from '../../assets/product-interface';
-import { GetBookmarkeList, GetEditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
+import { FilterBookmarkerList, GetBookmarkeList, GetEditBookmarker } from '../../../store/bookmarker/bookmarker.actions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -80,5 +80,6 @@ export class BookmarkListComponent {
 
   confirmModal(){
     this.displayModal = false;
+    this.store.dispatch(new FilterBookmarkerList(''));
   }
 }
