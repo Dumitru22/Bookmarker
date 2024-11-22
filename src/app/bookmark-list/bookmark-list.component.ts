@@ -16,16 +16,20 @@ export class BookmarkListComponent {
 
   constructor(private store: Store, private router: Router){}
 
-  bookmarkerList$!: Observable<Product[]>
+  // bookmarkerList$!: Observable<Product[]>
   filterValue$!: Observable<string>
   filterList$!: Observable<Product[]>
+  isError$!: Observable<boolean>
   today: Product[] = [];
   yesterday: Product[] = [];
   older: Product[] = [];
+  displayModal: boolean = false;
+  product: any = [];
   
   ngOnInit(){
+    this.isError$ = this.store.select(BookmarkerState.getError);
     this.store.dispatch(new GetBookmarkeList());
-    this.bookmarkerList$ = this.store.select(BookmarkerState.getBookmarkeList);
+    // this.bookmarkerList$ = this.store.select(BookmarkerState.getBookmarkeList);
     this.filterValue$ = this.store.select(BookmarkerState.getFilterBookmarker);
     this.filterList$ = this.store.select(BookmarkerState.getFilterList);
     this.store.select(BookmarkerState.getBookmarkeList).pipe(
@@ -62,5 +66,19 @@ export class BookmarkListComponent {
   editBookmark(product: Product) {
     this.store.dispatch(new GetEditBookmarker(product));
     this.router.navigate(['/edit'])
+  }
+
+  deleteBookmark(product: Product){
+    this.isError$ = this.store.select(BookmarkerState.getError);
+    this.displayModal = true;
+    this.product = product;
+  }
+
+  closeModal(){
+    this.displayModal = false;
+  }
+
+  confirmModal(){
+    this.displayModal = false;
   }
 }

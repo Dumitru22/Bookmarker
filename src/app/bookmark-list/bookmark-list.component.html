@@ -13,7 +13,10 @@
                         </span>
                         </div>
                     </div>
-                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                    <div>
+                        <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                        <img class="deleteIcon" (click)="deleteBookmark(product)" src="../../assets/delete.png">
+                    </div>
                 </div>
             </mat-list-item>
             
@@ -29,7 +32,10 @@
                         </span>
                         </div>
                     </div>
-                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                    <div>
+                        <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                        <img class="deleteIcon" (click)="deleteBookmark(product)" src="../../assets/delete.png">
+                    </div>
                 </div>
             </mat-list-item>
 
@@ -45,9 +51,15 @@
                         </span>
                         </div>
                     </div>
-                    <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                    <div>
+                        <img class="editIcon" (click)="editBookmark(product)" src="../../assets/icons8-edit-24.png">
+                        <img class="deleteIcon" (click)="deleteBookmark(product)" src="../../assets/delete.png">
+                    </div>
                 </div>
             </mat-list-item>
+            <div *ngIf="isError$ | async">
+                <app-error-page-ui [title]="'No bookmarker found'" [errorImage]="'../../assets/error.png'"></app-error-page-ui>
+            </div>
         </ng-container>
     </mat-list>
 </div>
@@ -66,11 +78,15 @@
                             </span>
                         </div>
                     </div>
-                    <img class="editIcon" (click)="editBookmark(filterItems)" src="../../assets/icons8-edit-24.png">
+                    <div>
+                        <img class="editIcon" (click)="editBookmark(filterItems)" src="../../assets/icons8-edit-24.png">
+                        <img class="deleteIcon" (click)="deleteBookmark(filterItems)" src="../../assets/delete.png">
+                    </div>
                 </div>
         </mat-list-item>
     </mat-list>
-    <div *ngIf="!(filterList$ | async)?.length">
+    <div *ngIf="isError$ | async">
         <app-error-page-ui [title]="'No results found'" [errorImage]="'../../assets/error.png'"></app-error-page-ui>
     </div>
 </ng-template> 
+<app-confirm-modal-ui *ngIf="displayModal" [product]="product" (closeModal)="closeModal()" (confirmModal)="confirmModal()"></app-confirm-modal-ui>

@@ -25,3 +25,8 @@ export class FilterBookmarkerList {
   constructor(public filterValue: string) {}
 }
 
+export class DeleteBookmarker {
+  static readonly type = 'Delete bookmarker] action';
+  constructor(public bookmarkDetails: Product) {}
+}
+

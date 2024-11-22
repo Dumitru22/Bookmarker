@@ -1,0 +1,39 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    mat-card{
+        width: 500px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        .card{
+            padding: 20px;
+            .title{
+                mat-card-title{
+                    font-size: 25px;
+                }
+            }
+            .inputElement{
+                margin-top: 50px;
+                    .secondRow{
+                        display: flex;
+                        flex-direction: column;
+                        .title {
+                            padding-bottom: 20px;
+                        }
+                        .card-footer {
+                            display: flex;
+                            justify-content: space-evenly;
+                        }
+                    }
+            }
+        }
+    }
+    
+}
